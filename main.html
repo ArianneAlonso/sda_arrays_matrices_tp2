@@ -34,8 +34,20 @@
     <button id="terminarBtn" onclick="terminarRegistro()">Terminar</button>
 
     <div class="result" id="resultados">
-        <h3>Lista ordenada por nota (de mayor a menor):</h3>
+        <h3>Lista de Alumnos Registrados</h3>
         <table id="tablaAlumnos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h3>Lista ordenada por nota (de mayor a menor)</h3>
+        <table id="tablaOrdenada">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -50,9 +62,8 @@
 
 <script>
     let alumnos = [];
-    let registroTerminado = false;
 
-    // Guarda el alumno
+    // datos del alumno en un subarreglo dentro de la lista principal (matriz)
     function guardarAlumno() {
         const nombre = document.getElementById('nombre').value;
         const edad = document.getElementById('edad').value;
@@ -63,10 +74,10 @@
             return;
         }
 
-        // Agrega el alumno al arreglo
-        alumnos.push({ nombre, edad: parseInt(edad), nota: parseFloat(nota) });
+        // subarreglo
+        alumnos.push([nombre, parseInt(edad), parseFloat(nota)]);
 
-        // Limpiar los campos
+        // limpia los campos
         document.getElementById('nombre').value = '';
         document.getElementById('edad').value = '';
         document.getElementById('nota').value = '';
@@ -74,24 +85,31 @@
         alert("alumno guardado correctamente");
     }
 
-    // boton "terminar"
     function terminarRegistro() {
         if (alumnos.length === 0) {
             alert("no hay datos registrados");
             return;
         }
 
-        // ordena los alumnos por nota de mayor a menor
-        alumnos.sort((a, b) => b.nota - a.nota);
+        // lista como fue ingresada
+        mostrarLista(alumnos, 'tablaAlumnos');
 
-        const tabla = document.getElementById('tablaAlumnos').getElementsByTagName('tbody')[0];
-        tabla.innerHTML = ''; // limpia el register
+        // lista por nota (de mayor a menor)
+        alumnos.sort((a, b) => b[2] - a[2]);
 
-        alumnos.forEach(alumno => {
+        // lista ordenada por nota
+        mostrarLista(alumnos, 'tablaOrdenada');
+    }
+
+    function mostrarLista(lista, tablaId) {
+        const tabla = document.getElementById(tablaId).getElementsByTagName('tbody')[0];
+        tabla.innerHTML = '';
+
+        lista.forEach(alumno => {
             const row = tabla.insertRow();
-            row.insertCell(0).innerText = alumno.nombre;
-            row.insertCell(1).innerText = alumno.edad;
-            row.insertCell(2).innerText = alumno.nota;
+            row.insertCell(0).innerText = alumno[0];
+            row.insertCell(1).innerText = alumno[1];
+            row.insertCell(2).innerText = alumno[2];
         });
     }
 </script>

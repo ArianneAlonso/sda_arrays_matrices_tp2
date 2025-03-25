@@ -1,0 +1,4 @@
+clonar el repositorio, tener instalado la extension de live server para el html, y python para el archivo de python, 
+abril la terminal, ubicarse en main.py
+
+ejecutar codigo
