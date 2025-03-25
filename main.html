@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>manejo de arrays y matrices</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Registrar Alumno</h1>
+    <div class="input-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="nombre">
+    </div>
+    <div class="input-group">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" placeholder="edad">
+    </div>
+    <div class="input-group">
+        <label for="nota">Nota:</label>
+        <input type="number" id="nota" placeholder="nota" step="0.01">
+    </div>
+    <button id="guardarBtn" onclick="guardarAlumno()">Guardar</button>
+    <button id="terminarBtn" onclick="terminarRegistro()">Terminar</button>
+
+    <div class="result" id="resultados">
+        <h3>Lista ordenada por nota (de mayor a menor):</h3>
+        <table id="tablaAlumnos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let alumnos = [];
+    let registroTerminado = false;
+
+    // Guarda el alumno
+    function guardarAlumno() {
+        const nombre = document.getElementById('nombre').value;
+        const edad = document.getElementById('edad').value;
+        const nota = document.getElementById('nota').value;
+
+        if (!nombre || !edad || !nota) {
+            alert("falta completar, por favor complete todos los campos");
+            return;
+        }
+
+        // Agrega el alumno al arreglo
+        alumnos.push({ nombre, edad: parseInt(edad), nota: parseFloat(nota) });
+
+        // Limpiar los campos
+        document.getElementById('nombre').value = '';
+        document.getElementById('edad').value = '';
+        document.getElementById('nota').value = '';
+
+        alert("alumno guardado correctamente");
+    }
+
+    // boton "terminar"
+    function terminarRegistro() {
+        if (alumnos.length === 0) {
+            alert("no hay datos registrados");
+            return;
+        }
+
+        // ordena los alumnos por nota de mayor a menor
+        alumnos.sort((a, b) => b.nota - a.nota);
+
+        const tabla = document.getElementById('tablaAlumnos').getElementsByTagName('tbody')[0];
+        tabla.innerHTML = ''; // limpia el register
+
+        alumnos.forEach(alumno => {
+            const row = tabla.insertRow();
+            row.insertCell(0).innerText = alumno.nombre;
+            row.insertCell(1).innerText = alumno.edad;
+            row.insertCell(2).innerText = alumno.nota;
+        });
+    }
+</script>
+
+</body>
+</html>
