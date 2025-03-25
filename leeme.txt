@@ -2,3 +2,6 @@ clonar el repositorio, tener instalado la extension de live server para el html,
 abril la terminal, ubicarse en main.py
 
 ejecutar codigo
+
+el html se ejecuta por navegador
+el py se ejecuta por consola
